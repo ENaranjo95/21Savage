@@ -5,7 +5,7 @@ const MongoClient = require('mongodb').MongoClient
 
 var db
 
-MongoClient.connect('mongodb://demo:demo@ds125146.mlab.com:25146/savage', (err, database) => {
+MongoClient.connect('mongodb://savage:test2018@ds129811.mlab.com:29811/21savage', (err, database) => {
   if (err) return console.log(err)
   db = database
   app.listen(process.env.PORT || 8000, () => {
@@ -24,13 +24,6 @@ app.get('/', (req, res) => {
     res.render('index.ejs', {messages: result})
   })
 })
-
-// app.get('/react', (req, res) => {
-//   db.collection('messages').find().toArray((err, result) => {
-//     if (err) return console.log(err)
-//     res.json(result)
-//   })
-// })
 
 app.post('/messages', (req, res) => {
   db.collection('messages').save({name: req.body.name, msg: req.body.msg, thumbUp: 0, thumbDown: 0}, (err, result) => {
@@ -59,7 +52,7 @@ app.put('/messages2', (req, res) => {
   db.collection('messages')
   .findOneAndUpdate({name: req.body.name, msg: req.body.msg}, {
     $set: {
-      thumbDown:req.body.thumbDown + 1
+      thumbUp:req.body.thumbUp - 1
     }
   }, {
     sort: {_id: -1},
